@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Mnist Prediction</title>
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+
+    h1 {
+      text-align: center;
+      color: black;
+      font-weight: 600;
+      padding: 30px;
+      font-size: 3.2em;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 50px;
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    input[type="number"] {
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      margin-bottom: 20px;
+      text-align: center;
+      width: 50px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      background-color: #007bff;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0062cc;
+    }
+
+    #result {
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .img-thumbnail {
+      width: 250px;
+      height: 250px;
+      float: right;
+    }
+
+    #prediction {
+      position: fixed;
+    }
+
+    .col-lg-5 {
+      padding-top: 30px;
+    }
+  </style>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <h1>MNIST Predictor</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <form class="form-inline" action="/predict" method="post" enctype="multipart/form-data">
+          <input type="file" name="file" /><br>
+          <input type="submit" class="btn btn-success" value="Predict">
+        </form>
+      </div>
+    </div>
+    <div class="row" id="result">
+      {% if prediction %}
+      <div class="col-lg-5">
+        <span class="border border-primary">
+          <img src="{{ user_image }}" alt="User Image" class="img-thumbnail">
+        </span>
+      </div>
+      <div class="col-lg-5">
+        <h4 id="prediction">The Given Image is of number <b>{{prediction}}</b></h4>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</body>
+
+</html>
