@@ -49,5 +49,26 @@ def predict():
             return render_template('index.html', prediction = prediction[0], user_image = file_path)
         else:
             return "Unable to read the file. Please check file extension"
+        
+@app.route('/predict_api',methods=['POST'])
+def predict_api():
+    if request.method == 'POST':
+        file = request.files['file']
+        if file and allowed_file(file.filename): #Checking file format
+            filename = file.filename
+            file_path = os.path.join('static/images', filename)
+            file.save(file_path)
+            img = cv2.imread(file_path) 
+            img = cv2.resize(img,(28,28))
+            img = np.resize(img, (1, 28, 28, 1))
+            img = img/255.0
+            img = 1 - img 
+
+            predict_prob=model.predict(img) 
+            prediction=np.argmax(predict_prob,axis=1)
+            return f"The Given Image is of Number:{prediction[0]}"
+        else:
+            return "Unable to read the file. Please check file extension"
+        
 if __name__ == '__main__':
     app.run(debug=True,use_reloader=False, port=8000)
